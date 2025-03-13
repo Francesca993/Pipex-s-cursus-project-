@@ -6,7 +6,7 @@
 /*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:26:48 by fmontini          #+#    #+#             */
-/*   Updated: 2025/03/13 11:02:39 by fmontini         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:06:51 by fmontini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ void	second_child(char *out_cmd, int *pipe_fd, char **envp, char *outfile)
 	execute(out_cmd, envp);
 }
 
+/*
+pipe(pipe_fd) serve a creare una pipe, che è un meccanismo di 
+comunicazione interprocesso (IPC) utilizzato per permettere a un processo 
+di inviare dati a un altro. La pipe è rappresentata come un 
+array di due file descriptor.
+pipe_fd[0] → È l'estremità di lettura della pipe.
+pipe_fd[1] → È l'estremità di scrittura della pipe.
+*/
 int	main(int argc, char *argv[], char *envp[])
 {
 	int	pipe_fd[2];

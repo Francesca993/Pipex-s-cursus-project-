@@ -1,3 +1,24 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/03/13 11:35:34 by fmontini          #+#    #+#              #
+#    Updated: 2025/03/13 11:39:31 by fmontini         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# 🎨 Colori ANSI
+RESET   = \033[0m
+RED     = \033[31m
+GREEN   = \033[32m
+YELLOW  = \033[33m
+BLUE    = \033[34m
+CYAN    = \033[36m
+BOLD    = \033[1m
+
 NAME = libft.a
 
 CC = cc
@@ -50,17 +71,33 @@ BONUS_SRCS = ft_lstnew.c \
              ft_lstmap.c
 
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
-
 OBJS = $(SRCS:.c=.o)
+
 all: $(NAME)
+	@echo "$(GREEN)✅ Compilation successful!$(RESET)"
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@echo "$(YELLOW)🔨 Creating archive: $(NAME)$(RESET)"
+	@ar rcs $(NAME) $(OBJS)
+
 bonus: $(BONUS_OBJS)
-	ar rcs $(NAME) $(BONUS_OBJS)
+	@echo "$(BLUE)➕ Adding bonus functions$(RESET)"
+	@ar rcs $(NAME) $(BONUS_OBJS)
+
+%.o: %.c
+	@echo "$(CYAN)🛠️  Compiling: $<$(RESET)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	@echo "$(RED)🗑️  Removing object files$(RESET)"
+	@rm -f $(OBJS) $(BONUS_OBJS)
+
 fclean: clean
-	rm -f $(NAME)
+	@echo "$(RED)🗑️  Removing archive: $(NAME)$(RESET)"
+	@rm -f $(NAME)
+
 re: fclean all
+
+.PHONY: all clean fclean re bonus
+
 
