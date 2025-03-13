@@ -1,8 +1,9 @@
-total 36
--rw-r--r-- 1 fmontini 2024_rome     0 Mar  6 15:33 infile
-drwxr-xr-x 2 fmontini 2024_rome  4096 Mar  6 15:33 Libft
--rw-r--r-- 1 fmontini 2024_rome  1777 Mar  6 15:31 Makefile
--rw-r--r-- 1 fmontini 2024_rome     0 Mar  6 15:35 outfile
--rwxr-xr-x 1 fmontini 2024_rome 18664 Mar  6 15:33 pipex
-drwxr-xr-x 2 fmontini 2024_rome  4096 Mar  6 15:33 Printf
-drwxr-xr-x 2 fmontini 2024_rome  4096 Mar  6 15:34 src
+Libft
+Makefile
+Printf
+infile
+main.c
+outfile
+pipex
+pipex.c
+src

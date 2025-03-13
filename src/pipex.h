@@ -22,8 +22,8 @@
 # include "../Printf/ft_printf.h" // Include le funzioni della libft
 
 void    error_exit(const char *msg);
-void first_child(char *infile, int **pipe_fd, char *in_cmd, char **envp);
-void    second_child(char **out_cmd, int **pipe_fd, char **envp, char *outfile);
+void    first_child(char *infile, int *pipe_fd, char *in_cmd, char **envp);
+void    second_child(char *out_cmd, int *pipe_fd, char **envp, char *outfile);
 void    execute_cmd(char *cmd, char **envp);
 
 #endif

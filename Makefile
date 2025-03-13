@@ -41,9 +41,9 @@ $(NAME): $(OBJ) $(LIBFT) $(FT_PRINTF)
 
 #Esegui il Makefile di libft e ft_printf
 $(LIBFT):
-	@male -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 $(FT_PRINTF):
-	@make -C $(FT_PRINTF)
+	@make -C $(PRINTF_DIR)
 
 all: $(NAME)
 

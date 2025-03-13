@@ -20,7 +20,7 @@ Chiudo i file descriptor non più necessari
 Eseguo il primo comando
 */
 
-void first_child(char *infile, int **pipe_fd, char *in_cmd, char **envp)
+void first_child(char *infile, int *pipe_fd, char *in_cmd, char **envp)
 {
     int fd_in;
     fd_in = open(infile, O_RDONLY);
@@ -37,8 +37,6 @@ void first_child(char *infile, int **pipe_fd, char *in_cmd, char **envp)
         execute_cmd(in_cmd, envp);
 }
 
-
-
 /*
 Apro il file di output con permessi di scrittura
 O_WRONLY: Scrittura
@@ -49,7 +47,7 @@ Reindirizzo stdin alla pipe (lettura)
 Reindirizzo stdout al file di output
 Chiudo i file descriptor non più necessari
 */
-void    second_child(char **out_cmd, int **pipe_fd, char **envp, char *outfile)
+void    second_child(char *out_cmd, int *pipe_fd, char **envp, char *outfile)
 {
     int fd_out;
     fd_out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
@@ -62,12 +60,13 @@ void    second_child(char **out_cmd, int **pipe_fd, char **envp, char *outfile)
     close(pipe_fd[1]);
     execute_cmd(out_cmd, envp);
 }
+
 void error_exit(const char *msg)
 {
     perror(msg);
     exit(EXIT_FAILURE);
 }
-
+/**
 //execve(path, argv, envp) esegue un nuovo programma sostituendo 
 //l'attuale processo con il comando specificato.
 ///bin/sh" → Usa la shell per eseguire cmd.
@@ -78,4 +77,80 @@ void    execute_cmd(char *cmd, char **envp)
     char *argv[] = {"/bin/sh", "-c", cmd, NULL};
     if (execve("/bin/sh", argv, envp) == -1)
         error_exit("execve fallita");  
+}
+*/
+
+void    free_paths(char **paths)
+{
+    int    i;
+    
+    i = 0;
+    while (paths[i])
+    {
+        free(paths[i]);
+        i++;
+    }
+    free(paths);
+}
+/*
+Scorro la matrice con dentro tutti i vari path per cercare il comando 
+e testa in ognuno con (access(path, F_OK | X_OK) == 0)
+*/
+
+char *construct_path(char *cmd, char **paths)
+{
+    int     i;
+    char    *part_path;
+    char    *path;
+
+    i = 0;
+    while (paths[i])
+    {
+        part_path = ft_strjoin(paths[i], "/");
+        path = ft_strjoin(part_path, cmd);
+        free(part_path);
+        if (access(path, F_OK | X_OK) == 0)
+        {
+            free_paths(paths);
+            return (path);
+        }
+        free(path);
+        i++;
+    }
+    return (NULL);
+}
+/*
+Vado a scorrere l'envp conm ft_strnstr che cerca PATH
+creo una matrice con tutti vari path con split separando per i :
+vado a cercare il path funzionante con construct path
+libero la memoria e ritorno il path corretto
+*/
+char *find_path(char *cmd, char **envp)
+{
+    char    **paths;
+    char    *path;
+    int     i;
+    
+    i = 0;
+    while ((envp[i]) && (ft_strnstr(envp[i], "PATH=", 5) == NULL))
+        i++;
+    if (!envp[i])
+        return (NULL);
+    paths = ft_split(envp[i] + 5, ':');
+    path = construct_path(cmd, paths);
+    free_paths(paths);
+    return (path);
+}
+/*
+La funzione execute Divide il comando e i suoi argomenti con split
+perché execve richiede un array di stringhe (char **argv) per 
+eseguire correttamente il programma.
+ usa find_path per trovare 
+il comando e poi lo esegue con execve
+*/
+void    execute(char *argv, char **envp)
+{
+    char    **cmd
+    char    *path;
+    int     i;
 }
