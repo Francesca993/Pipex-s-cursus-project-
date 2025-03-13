@@ -24,6 +24,10 @@
 void    error_exit(const char *msg);
 void    first_child(char *infile, int *pipe_fd, char *in_cmd, char **envp);
 void    second_child(char *out_cmd, int *pipe_fd, char **envp, char *outfile);
-void    execute_cmd(char *cmd, char **envp);
+//void    execute_cmd(char *cmd, char **envp);
+void    free_memory(char **paths);
+char    *construct_path(char *cmd, char **paths);
+char    *find_path(char *cmd, char **envp);
+void    execute(char *argv, char **envp);
 
 #endif
